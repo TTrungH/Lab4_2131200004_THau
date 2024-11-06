@@ -22,7 +22,7 @@ const ContactThum = ({ name, phone, avatar, textColor, onPress }) => {
                     style={styles.avatar}
                 />
             </ImageContact>
-
+            
             {name !== '' && <Text style={[styles.name, colorStyle]}>{name}</Text>}
 
             {phone !== '' && (

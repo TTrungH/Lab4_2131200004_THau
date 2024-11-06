@@ -8,10 +8,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ProfileContact from './src/ProfileContact';
 import Favorites from './src/Favorites';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import ContactListItem from './src/ContactListItem';
-import ContactThum from './src/ContactThum';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const Stack = createStackNavigator();
 
 function ContactsScreens() {
@@ -58,16 +55,26 @@ function FavoriteScreens() {
 const Tab = createMaterialBottomTabNavigator();
 const TabNavigator = () => {
   return (
-      <Tab.Navigator
-        initialRouteName="ContactsScreens"
-        barStyle={{backgroundColor: 'blue'}}
-        labeled={false}
-        activeColor="white"
-        inactiveColor="black">
-        <Tab.Screen name="Contacts" component={ContactsScreens} />
-        <Tab.Screen name="Favorites" component={FavoriteScreens} />
-      </Tab.Navigator>
+    <Tab.Navigator
+      initialRouteName="ContactsScreens"
+      barStyle={{backgroundColor: 'blue'}}
+      labeled={false}
+      activeColor='white'
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color}) => {
+          let iconName = '';
 
+          if (route.name === 'Contacts') {
+            iconName = focused ? 'menu-open' : 'menu';
+          } else if (route.name === 'Favorites') {
+            iconName = focused ? 'star-check' : 'star';
+          }
+          return <Icon name={iconName} size={30} color={color} />;
+        },
+      })}>
+      <Tab.Screen name="Contacts" component={ContactsScreens} />
+      <Tab.Screen name="Favorites" component={FavoriteScreens} />
+    </Tab.Navigator>
   );
 };
 const App = () => {
@@ -77,7 +84,6 @@ const App = () => {
         <TabNavigator />
       </NavigationContainer>
     </Provider>
-    
   );
 };
 export default App;
